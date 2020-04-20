@@ -1,0 +1,10 @@
+site_name: pytest-extra-durations
+site_description: A pytest plugin to get durations on a per-function basis and per module basis.
+site_author: Gabriel de Marmiesse
+
+theme: readthedocs
+
+repo_url: https://github.com/gabrieldemarmiesse/pytest-extra-durations
+
+pages:
+- Home: index.md
