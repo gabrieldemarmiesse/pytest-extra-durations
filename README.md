@@ -10,7 +10,7 @@ It works with pytest-xdist too.
 You can install "pytest-extra-durations" via `pip`:
 
 ```bash
-pip install git+https://github.com/gabrieldemarmiesse/pytest-extra-durations.git
+pip install pytest-extra-durations
 ```
 
 ### Usage
