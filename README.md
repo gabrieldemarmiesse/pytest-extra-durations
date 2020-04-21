@@ -79,7 +79,6 @@ gives:
 ### TODO: 
 
 * Integration with line_profiler
-* Running the tests in github actions
 
 
 ### License
