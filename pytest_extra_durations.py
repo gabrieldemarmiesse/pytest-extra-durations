@@ -1,9 +1,32 @@
 # -*- coding: utf-8 -*-
 
-import pytest
-
-
 from collections import defaultdict
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--modules-durations",
+        action="store",
+        type=int,
+        default=None,
+        metavar="N",
+        help="show N slowest modules durations (N=0 for all). "
+        "A module duration is the sum of the durations of all its tests, "
+        "setups and teardowns.",
+    )
+
+    parser.addoption(
+        "--functions-durations",
+        action="store",
+        type=int,
+        default=None,
+        metavar="N",
+        help="show N slowest test functions durations (N=0 for all). "
+        "This is different from the --durations argument. --durations works on "
+        "a per-test basis, but a test function can produce multiple tests. "
+        "This gives the sum of all the durations of the tests generated from "
+        "a given test function.",
+    )
 
 
 def get_test_reports(terminalreporter):
@@ -15,8 +38,11 @@ def get_test_reports(terminalreporter):
     return dlist
 
 
-def report_file_durations(terminalreporter):
-    durations = 17
+def report_modules_durations(terminalreporter):
+    durations = terminalreporter.config.getoption("--modules-durations")
+    if durations is None:
+        return
+
     dlist = get_test_reports(terminalreporter)
     if not dlist:
         return
@@ -31,17 +57,20 @@ def report_file_durations(terminalreporter):
     dlist.sort(key=lambda x: x[1])
     dlist.reverse()
     if not durations:
-        terminalreporter.write_sep("=", "slowest file durations")
+        terminalreporter.write_sep("=", "slowest modules durations")
     else:
-        terminalreporter.write_sep("=", "slowest %s file durations" % durations)
+        terminalreporter.write_sep("=", f"slowest {durations} modules durations")
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:
-        terminalreporter.write_line("{:02.2f}s {}".format(test_time, filename))
+        terminalreporter.write_line(f"{test_time:02.2f}s {filename}")
 
 
 def report_funtions_durations(terminalreporter):
-    durations = 17
+    durations = terminalreporter.config.getoption("--functions-durations")
+    if durations is None:
+        return
+
     dlist = get_test_reports(terminalreporter)
     if not dlist:
         return
@@ -62,11 +91,11 @@ def report_funtions_durations(terminalreporter):
     if not durations:
         terminalreporter.write_sep("=", "slowest test functions durations")
     else:
-        terminalreporter.write_sep("=", "slowest %s test functions" % durations)
+        terminalreporter.write_sep("=", f"slowest {durations} test functions")
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:
-        terminalreporter.write_line("{:02.2f}s {}".format(test_time, filename))
+        terminalreporter.write_line(f"{test_time:02.2f}s {filename}")
 
 
 def report_sum_durations(terminalreporter):
@@ -76,10 +105,10 @@ def report_sum_durations(terminalreporter):
         return
 
     terminalreporter.write_sep("=", "Sum of all tests durations")
-    terminalreporter.write_line("{:02.2f}s".format(sum(x.duration for x in dlist)))
+    terminalreporter.write_line(f"{sum(x.duration for x in dlist):02.2f}s")
 
 
 def pytest_terminal_summary(terminalreporter):
-    report_file_durations(terminalreporter)
+    report_modules_durations(terminalreporter)
     report_funtions_durations(terminalreporter)
     report_sum_durations(terminalreporter)
