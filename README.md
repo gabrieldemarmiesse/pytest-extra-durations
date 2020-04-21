@@ -79,7 +79,6 @@ gives:
 ### TODO: 
 
 * Integration with line_profiler
-* Add tests (the ones present are dummy ones)
 * Running the tests in github actions
 
 
