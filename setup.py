@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="pytest-extra-durations",
-    version="0.1.0",
+    version="0.1.1",
     author="Gabriel de Marmiesse",
     author_email="gabrieldemarmiesse@gmail.com",
     maintainer="Gabriel de Marmiesse",
