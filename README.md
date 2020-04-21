@@ -17,7 +17,7 @@ pip install git+https://github.com/gabrieldemarmiesse/pytest-extra-durations.git
 
 This plugin provides three types of information.
 
-##### The sum of all tests/setup/teardown durations
+#### The sum of all tests/setup/teardown durations
 
 This can give you more info than the total time displayed by pytest because it's 
 not influenced by the number of workers in pytest-dist, or the collection time.
@@ -33,7 +33,7 @@ This will be displayed all the time and can't be turned off unless you
 uninstall this plugin.
 
 
-##### The sum of all the tests durations of a module
+#### The sum of all the tests durations of a module
 
 This will tell you how much time it took to execute all the tests in a given file.
 The API is similar to the one of `--durations` in the Pytest CLI.
@@ -52,7 +52,7 @@ gives:
 0.09s tensorflow_addons/activations/tests/rrelu_test.py
 ```
 
-##### The sum of all the tests durations of a test function
+#### The sum of all the tests durations of a test function
 
 A test function can produce multiple tests, that can be executed on different workers 
 too. This will sum the durations of all tests, setups and teardown produced by 
