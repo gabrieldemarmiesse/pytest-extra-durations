@@ -24,7 +24,7 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     py_modules=["pytest_extra_durations"],
-    python_requires=">=3.6",
+    python_requires=">=3.5",
     install_requires=["pytest>=3.5.0"],
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -35,6 +35,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         "Operating System :: OS Independent",

@@ -10,7 +10,7 @@ def pytest_addoption(parser):
         type=int,
         default=None,
         metavar="N",
-        help="show N slowest modules durations (N=0 for all). "
+        help="Shows the N slowest modules durations (N=0 for all). "
         "A module duration is the sum of the durations of all its tests, "
         "setups and teardowns.",
     )
@@ -21,7 +21,7 @@ def pytest_addoption(parser):
         type=int,
         default=None,
         metavar="N",
-        help="show N slowest test functions durations (N=0 for all). "
+        help="Shows the N slowest test functions durations (N=0 for all). "
         "This is different from the --durations argument. --durations works on "
         "a per-test basis, but a test function can produce multiple tests. "
         "This gives the sum of all the durations of the tests generated from "
@@ -61,7 +61,7 @@ def report_modules_durations(terminalreporter):
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:
-        terminalreporter.write_line(f"{test_time:02.2f}s {filename}")
+        terminalreporter.write_line("{:02.2f}s {}".format(test_time, filename))
 
 
 def report_funtions_durations(terminalreporter):
@@ -91,7 +91,7 @@ def report_funtions_durations(terminalreporter):
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:
-        terminalreporter.write_line(f"{test_time:02.2f}s {filename}")
+        terminalreporter.write_line("{:02.2f}s {}".format(test_time, filename))
 
 
 def report_sum_durations(terminalreporter):
@@ -100,8 +100,8 @@ def report_sum_durations(terminalreporter):
     if not dlist:
         return
 
-    terminalreporter.write_sep("=", "Sum of all tests durations")
-    terminalreporter.write_line(f"{sum(x.duration for x in dlist):02.2f}s")
+    terminalreporter.write_sep("=", "sum of all tests durations")
+    terminalreporter.write_line("{:02.2f}s".format(sum(x.duration for x in dlist)))
 
 
 def pytest_terminal_summary(terminalreporter):

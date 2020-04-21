@@ -1,24 +1,59 @@
 # -*- coding: utf-8 -*-
 
 
-def test_bar_fixture(testdir):
-    """Make sure that pytest accepts our fixture."""
+def test_modules_durations(testdir):
 
     # create a temporary pytest test module
     testdir.makepyfile(
-        """
-        def test_sth(bar):
-            assert bar == "europython2015"
+        test_foo="""
+        def test_sth():
+            assert 2 + 2 == 4
     """
     )
 
     # run pytest with the following cmd args
-    result = testdir.runpytest("--foo=europython2015", "-v")
+    result = testdir.runpytest("--modules-durations=2")
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(
-        ["*::test_sth PASSED*",]
+        ["*s test_foo.py",]
     )
+
+    assert "sum of all tests durations" in "\n".join(result.stdout.lines)
+
+    # make sure that that we get a '0' exit code for the testsuite
+    assert result.ret == 0
+
+
+def test_functions_durations(testdir):
+
+    # create a temporary pytest test module
+    testdir.makepyfile(
+        test_foo="""
+        import time
+        import pytest
+        
+        @pytest.mark.parametrize("dodo", range(3))
+        def test_sth(dodo):
+            time.sleep(0.1)
+            assert 2 + 2 == 4
+        
+        def test_dada():
+            time.sleep(0.15)
+            assert 2 + 2 == 4
+    """
+    )
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest("--functions-durations=1")
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.fnmatch_lines(
+        ["*s test_foo.py::test_sth",]
+    )
+
+    for line in result.stdout.lines:
+        assert "test_dada" not in line
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
@@ -28,37 +63,14 @@ def test_help_message(testdir):
     result = testdir.runpytest("--help",)
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(
-        ["extra-durations:", '*--foo=DEST_FOO*Set the value for the fixture "bar".',]
+        ["*--functions-durations=N*",]
     )
-
-
-def test_hello_ini_setting(testdir):
-    testdir.makeini(
-        """
-        [pytest]
-        HELLO = world
-    """
-    )
-
-    testdir.makepyfile(
-        """
-        import pytest
-
-        @pytest.fixture
-        def hello(request):
-            return request.config.getini('HELLO')
-
-        def test_hello_world(hello):
-            assert hello == 'world'
-    """
-    )
-
-    result = testdir.runpytest("-v")
-
-    # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(
-        ["*::test_hello_world PASSED*",]
+        ["*Shows the N slowest test functions durations*",]
     )
-
-    # make sure that that we get a '0' exit code for the testsuite
-    assert result.ret == 0
+    result.stdout.fnmatch_lines(
+        ["*--modules-durations=N*",]
+    )
+    result.stdout.fnmatch_lines(
+        ["*Shows the N slowest modules durations*",]
+    )
