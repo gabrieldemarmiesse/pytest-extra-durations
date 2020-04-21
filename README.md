@@ -80,7 +80,6 @@ gives:
 
 * Integration with line_profiler
 * Add tests (the ones present are dummy ones)
-* Automatic upload to pypi with github actions
 * Running the tests in github actions
 
 
