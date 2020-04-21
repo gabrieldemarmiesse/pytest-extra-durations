@@ -22,6 +22,7 @@ setup(
     url="https://github.com/gabrieldemarmiesse/pytest-extra-durations",
     description="A pytest plugin to get durations on a per-function basis and per module basis.",
     long_description=read("README.md"),
+    long_description_content_type="text/markdown",
     py_modules=["pytest_extra_durations"],
     python_requires=">=3.6",
     install_requires=["pytest>=3.5.0"],
