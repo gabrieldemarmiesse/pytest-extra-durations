@@ -56,10 +56,8 @@ def report_modules_durations(terminalreporter):
 
     dlist.sort(key=lambda x: x[1])
     dlist.reverse()
-    if not durations:
-        terminalreporter.write_sep("=", "slowest modules durations")
-    else:
-        terminalreporter.write_sep("=", f"slowest {durations} modules durations")
+    terminalreporter.write_sep("=", "slowest modules durations")
+    if durations:
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:
@@ -88,10 +86,8 @@ def report_funtions_durations(terminalreporter):
 
     dlist.sort(key=lambda x: x[1])
     dlist.reverse()
-    if not durations:
-        terminalreporter.write_sep("=", "slowest test functions durations")
-    else:
-        terminalreporter.write_sep("=", f"slowest {durations} test functions")
+    terminalreporter.write_sep("=", "slowest test functions durations")
+    if durations:
         dlist = dlist[:durations]
 
     for filename, test_time in dlist:

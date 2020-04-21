@@ -67,11 +67,12 @@ pytest --functions-durations=4 ./path/to/test/directory
 gives:
 
 ```
-=============== slowest 4 modules durations =============
-1.17s tensorflow_addons/activations/tests/sparsemax_test.py
-0.28s tensorflow_addons/activations/tests/gelu_test.py
-0.10s tensorflow_addons/activations/tests/softshrink_test.py
-0.09s tensorflow_addons/activations/tests/rrelu_test.py
+============ slowest test functions =============
+0.99s tensorflow_addons/activations/tests/sparsemax_test.py::test_gradient_against_estimate
+0.17s tensorflow_addons/activations/tests/gelu_test.py::test_same_as_py_func
+0.09s tensorflow_addons/activations/tests/softshrink_test.py::test_same_as_py_func
+0.08s tensorflow_addons/activations/tests/gelu_test.py::test_gelu
+0.08s tensorflow_addons/activations/tests/rrelu_test.py::test_theoretical_gradients
 ```
 
 
